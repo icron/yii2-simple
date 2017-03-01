@@ -13,6 +13,11 @@ class OneuiAsset extends AssetBundle
     public $js = [
         'js/core/jquery.min.js',
         'js/core/bootstrap.min.js',
+        'js/core/jquery.slimscroll.min.js',
+        'js/core/jquery.scrollLock.min.js',
+        'js/core/jquery.countTo.min.js',
+        'js/core/jquery.placeholder.min.js',
+        'js/core/js.cookie.min.js',
         'js/app.js'
     ];
     public $depends = [
