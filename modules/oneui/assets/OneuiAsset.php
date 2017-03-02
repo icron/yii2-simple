@@ -19,6 +19,7 @@ class OneuiAsset extends AssetBundle
         'js/core/jquery.placeholder.min.js',
         'js/core/js.cookie.min.js',
         'js/app.js'
+
     ];
     public $depends = [
     ];

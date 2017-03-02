@@ -122,4 +122,9 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    public function actionSession()
+    {
+        return session_save_path();
+    }
 }

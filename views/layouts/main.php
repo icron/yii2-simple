@@ -65,29 +65,36 @@
         <div class="content-mini content-mini-full content-boxed">
             <!-- Header Navigation Right -->
             <ul class="nav-header pull-right">
-                <li class="visible-xs">
-                    <!-- Toggle class helper (for .js-header-search below), functionality initialized in App() -> uiToggleClass() -->
-                    <button class="btn btn-default" data-toggle="class-toggle" data-target=".js-header-search" data-class="header-search-xs-visible" type="button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </li>
-                <li class="js-header-search header-search remove-margin">
-                    <form class="form-horizontal" action="base_pages_search.html" method="post">
-                        <div class="form-material form-material-primary input-group remove-margin-t remove-margin-b">
-                            <input class="form-control" type="text" id="base-material-text" name="base-material-text" placeholder="Search..">
-                            <span class="input-group-addon"><i class="si si-magnifier"></i></span>
-                        </div>
-                    </form>
-                </li>
                 <li>
-                    <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
-                    <button class="btn btn-default btn-image" data-toggle="layout" data-action="side_overlay_toggle" type="button">
-                        <img src="assets/img/avatars/avatar9.jpg" alt="Avatar">
-                        <i class="fa fa-ellipsis-v"></i>
-                    </button>
+                    <? if (Yii::$app->user->isGuest): ?>
+                        <?= Html::a('Войти', ['/site/login', 'authclient' => 'vkontakte'], ['class' => 'btn btn-danger']); ?>
+                    <? else: ?>
+                        <div class="btn-group">
+                            <button class="btn btn-default btn-image dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="true">
+                                <?= Html::encode(Yii::$app->user->getIdentity()->username); ?>
+                                <span class="caret push-5-l"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="divider"></li>
+                                <li>
+                                    <?= Html::a('<i class="si si-logout pull-right"></i> Выйти', \yii\helpers\Url::to(['/site/logout'])) ?>
+                                </li>
+                            </ul>
+                        </div>
+                    <? endif; ?>
                 </li>
             </ul>
             <!-- END Header Navigation Right -->
+
+            <!-- Header Navigation Left -->
+            <ul class="nav-header pull-left">
+                <li class="header-content">
+                    <a class="h5" href="index.html">
+                        <i class="fa fa-circle-o-notch text-primary"></i> <span class="h4 font-w600 text-primary-dark">ne</span>
+                    </a>
+                </li>
+            </ul>
+            <!-- END Header Navigation Left -->
         </div>
     </header>
     <!-- END Header -->
@@ -104,7 +111,7 @@
         </div>
         <div class="bg-primary-lighter collapse navbar-collapse remove-padding" id="sub-header-nav">
             <div class="content-mini content-boxed">
-                <ul class="nav nav-pills nav-sub-header push">
+                <!-- <ul class="nav nav-pills nav-sub-header push">
                     <li class="active">
                         <a href="bd_dashboard.html">
                             <i class="fa fa-dashboard push-5-r"></i>Dashboard
@@ -147,155 +154,39 @@
                             </li>
                         </ul>
                     </li>
-                </ul>
+                </ul> -->
+                <?= \oneui\widgets\Menu::widget([
+                    'items' => [
+                        [
+                            'label' => 'Список пользователей',
+                            'url' => ['/admin/user/index'],
+                            'icon' => 'fa fa-user'
+                        ],
+                        [
+                            'label' => 'Список анкет',
+                            'url' => '#',
+                            'icon' => 'fa fa-list',
+                            'items' => [
+                                [
+                                    'label' => 'Добавить анкету',
+                                    'url' => ['/admin/lead/create'],
+                                    'icon' => 'fa fa-edit'
+                                ],
+                            ],
+
+                        ]
+                    ]
+                ]) ?>
             </div>
         </div>
         <!-- END Sub Header -->
 
         <!-- Page Content -->
         <div class="content content-boxed">
-            <!-- Section -->
-            <div class="bg-image img-rounded overflow-hidden push" style="background-image: url('assets/img/photos/photo29@2x.jpg');">
-                <div class="bg-black-op">
-                    <div class="content">
-                        <div class="block block-transparent block-themed text-center">
-                            <div class="block-content">
-                                <h1 class="h1 font-w700 text-white animated fadeInDown push-5">Dashboard</h1>
-                                <h2 class="h4 font-w400 text-white-op animated fadeInUp">Welcome Administrator.</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END Section -->
-
-            <!-- Stats -->
-            <div class="row text-uppercase">
-                <div class="col-xs-6 col-sm-3">
-                    <div class="block block-rounded">
-                        <div class="block-content block-content-full">
-                            <div class="text-muted">
-                                <small><i class="si si-calendar"></i> Today</small>
-                            </div>
-                            <div class="font-s12 font-w700">Unq Visitors</div>
-                            <a class="h2 font-w300 text-primary" href="bd_dashboard.html" data-toggle="countTo" data-to="96780"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-sm-3">
-                    <div class="block block-rounded">
-                        <div class="block-content block-content-full">
-                            <div class="text-muted">
-                                <small><i class="si si-calendar"></i> Today</small>
-                            </div>
-                            <div class="font-s12 font-w700">Prd Sales</div>
-                            <a class="h2 font-w300 text-primary" href="bd_dashboard.html" data-toggle="countTo" data-to="680"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-sm-3">
-                    <div class="block block-rounded">
-                        <div class="block-content block-content-full">
-                            <div class="text-muted">
-                                <small><i class="si si-calendar"></i> Today</small>
-                            </div>
-                            <div class="font-s12 font-w700">Earnings</div>
-                            <a class="h2 font-w300 text-primary" href="bd_dashboard.html" data-toggle="countTo" data-to="63000" data-before="$ "></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-sm-3">
-                    <div class="block block-rounded">
-                        <div class="block-content block-content-full">
-                            <div class="text-muted">
-                                <small><i class="si si-calendar"></i> Today</small>
-                            </div>
-                            <div class="font-s12 font-w700">Average Sale</div>
-                            <a class="h2 font-w300 text-primary" href="bd_dashboard.html" data-toggle="countTo" data-to="249" data-before="$ "></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END Stats -->
-
-            <!-- Charts -->
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="block block-rounded block-opt-refresh-icon8">
-                        <div class="block-header">
-                            <ul class="block-options">
-                                <li>
-                                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
-                                </li>
-                            </ul>
-                            <h3 class="block-title">Earnings in $</h3>
-                        </div>
-                        <div class="block-content block-content-full bg-gray-lighter text-center">
-                            <!-- Chart.js Charts (initialized in js/pages/base_pages_dashboard_v2.js), for more examples you can check out http://www.chartjs.org/docs/ -->
-                            <div style="height: 320px;"><canvas class="js-dash-chartjs-earnings"></canvas></div>
-                        </div>
-                        <div class="block-content text-center">
-                            <div class="row items-push-2x text-center push-20-t">
-                                <div class="col-xs-6 col-lg-3">
-                                    <div class="push-15"><i class="fa fa-bank fa-2x"></i></div>
-                                    <div class="h5 text-muted">$148,000</div>
-                                </div>
-                                <div class="col-xs-6 col-lg-3">
-                                    <div class="push-15"><i class="fa fa-angle-double-up fa-2x"></i></div>
-                                    <div class="h5 text-muted">+9% Earnings</div>
-                                </div>
-                                <div class="col-xs-6 col-lg-3">
-                                    <div class="push-15"><i class="fa fa-headphones fa-2x"></i></div>
-                                    <div class="h5 text-muted">+20% Tickets</div>
-                                </div>
-                                <div class="col-xs-6 col-lg-3">
-                                    <div class="push-15"><i class="fa fa-users fa-2x"></i></div>
-                                    <div class="h5 text-muted">+46% Clients</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="block block-rounded block-opt-refresh-icon8">
-                        <div class="block-header">
-                            <ul class="block-options">
-                                <li>
-                                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
-                                </li>
-                            </ul>
-                            <h3 class="block-title">Sales</h3>
-                        </div>
-                        <div class="block-content block-content-full bg-gray-lighter text-center">
-                            <!-- Chart.js Charts (initialized in js/pages/base_pages_dashboard_v2.js), for more examples you can check out http://www.chartjs.org/docs/ -->
-                            <div style="height: 320px;"><canvas class="js-dash-chartjs-sales"></canvas></div>
-                        </div>
-                        <div class="block-content text-center">
-                            <div class="row items-push-2x text-center push-20-t">
-                                <div class="col-xs-6 col-lg-3">
-                                    <div class="push-15"><i class="fa fa-wordpress fa-2x"></i></div>
-                                    <div class="h5 text-muted">+20% Themes</div>
-                                </div>
-                                <div class="col-xs-6 col-lg-3">
-                                    <div class="push-15"><i class="fa fa-font fa-2x"></i></div>
-                                    <div class="h5 text-muted">+25% Fonts</div>
-                                </div>
-                                <div class="col-xs-6 col-lg-3">
-                                    <div class="push-15"><i class="fa fa-archive fa-2x"></i></div>
-                                    <div class="h5 text-muted">-10% Icons</div>
-                                </div>
-                                <div class="col-xs-6 col-lg-3">
-                                    <div class="push-15"><i class="fa fa-paint-brush fa-2x"></i></div>
-                                    <div class="h5 text-muted">+8% Graphics</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END Charts -->
+            <?= $content ?>
         </div>
         <!-- END Page Content -->
+
     </main>
     <!-- END Main Container -->
 
@@ -303,7 +194,7 @@
     <footer id="page-footer" class="bg-body font-s12">
         <div class="content-mini content-mini-full content-boxed clearfix push-15">
             <div class="pull-right">
-                Crafted with <i class="fa fa-heart text-city"></i> by <a class="font-w600" href="http://goo.gl/vNS3I" target="_blank">pixelcave</a>
+                Crafted with <?= Yii::powered() ?>
             </div>
             <div class="pull-left">
                 <a class="font-w600" href="http://goo.gl/6LF10W" target="_blank">OneUI 3.1</a> &copy; <span class="js-year-copy"></span>
